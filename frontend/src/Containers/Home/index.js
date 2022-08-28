@@ -27,7 +27,8 @@ class Home extends Component {
     }
   }
   fetchSearch() {
-    // TODO: something is missing here for fetching
+    // DONE: something is missing here for fetching
+    this.props.searchRecipes({ name: this.state.term, ingridients: this.state.ingredients })
   }
   handleSearch(event) {
     const term = event.target.value

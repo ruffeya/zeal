@@ -16,24 +16,24 @@ const failedSearch = (payload) => ({
   payload,
 })
 
-export const executeSearch = async (name, ingredients) => {
+export const executeSearch = async (payload) => {
   const response = await fetch("/api/search", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, ingredients }),
+    body: JSON.stringify(payload),
   })
   const searchResults = await response.json()
   return searchResults
 }
 
-// TODO: fix action
-export const searchRecipes = (name, ingredients) => {
+// DONE: fix action
+export const searchRecipes = (payload) => {
   return (dispatch) => {
     dispatch(fetchingSearch())
-    return executeSearch(name, ingredients)
-      .then((res) => fetchedSearch(res))
+    return executeSearch(payload)
+      .then((res) => dispatch(fetchedSearch(res)))
       .catch((err) => dispatch(failedSearch(err)))
   }
 }
