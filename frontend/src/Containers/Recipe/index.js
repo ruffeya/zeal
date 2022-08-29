@@ -1,56 +1,36 @@
 // DONE Create a connected component to render a fetched recipe
 
-import React, { Component } from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
+import { useParams } from "react-router-dom";
 import CircularProgress  from "@material-ui/core/CircularProgress"
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
 import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import CloseIcon from '@material-ui/icons/Close'
-
 
 import RecipeInfo from "./components/RecipeInfo"
 import * as actions from "../../actions"
 
-class Recipe extends Component { 
-  handleClose = () => {
-    this.props.clearRecipe()
-  }
+export const Recipe = ({ recipe, isLoading, fetchRecipe }) => { 
+  let params = useParams();
 
-  render() {
-    const { recipe, isLoading } = this.props
-    if (!recipe) return null
+  useEffect(() => {
+    fetchRecipe({id: params.id})
+  }, [params.id])
+  
+  if (!recipe && !isLoading) return null;
+  return (
+    <>
+      <Toolbar disableGutters>
+        <Typography variant="h5">
+          {recipe?.name}
+        </Typography>
+      </Toolbar>
 
-    return (
-      <Dialog
-        fullScreen
-        open
-        onClose={this.handleClose}
-      >
-        <DialogTitle>
-          <Toolbar disableGutters>
-            <IconButton
-              aria-label="close"
-              onClick={this.handleClose}
-            >
-                <CloseIcon />
-            </IconButton>
-            <Typography variant="h5">
-              {recipe.name}
-            </Typography>
-          </Toolbar>
-        </DialogTitle>
-        <DialogContent>
-            {isLoading && <CircularProgress />}
-            {!isLoading && <RecipeInfo recipe={recipe} />}
-        </DialogContent>
-      </Dialog>
-    )
-  }
+      {isLoading && <CircularProgress />}
+      {!isLoading && <RecipeInfo recipe={recipe} />}
+    </>
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -61,7 +41,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      clearRecipe: actions.clearRecipe,
+      fetchRecipe: actions.fetchRecipe,
     },
     dispatch
   )

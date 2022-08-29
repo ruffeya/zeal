@@ -5,7 +5,7 @@
 export const GET_RECIPE = "GET_RECIPE"
 export const RECEIVE_RECIPE = "RECEIVE_RECIPE"
 export const FAIL_RECIPE = "FAIL_RECIPE"
-export const CLEAR_RECIPE = "CLEAR_RECIPE"
+export const SET_RECIPE = "SET_RECIPE"
 
 const fetchingRecipe = (payload) => ({
   type: GET_RECIPE,
@@ -22,8 +22,9 @@ const failedRecipe = (payload) => ({
   payload,
 })
 
-export const clearRecipe = () => ({
-  type: CLEAR_RECIPE,
+export const setRecipe = (payload) => ({
+  type: SET_RECIPE,
+  payload,
 })
 
 export const executeFetch = async (payload) => {
