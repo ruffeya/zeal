@@ -3,7 +3,7 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"
 import CircularProgress  from "@material-ui/core/CircularProgress"
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -12,13 +12,13 @@ import RecipeInfo from "./components/RecipeInfo"
 import * as actions from "../../actions"
 
 export const Recipe = ({ recipe, isLoading, fetchRecipe }) => { 
-  let params = useParams();
+  let params = useParams()
 
   useEffect(() => {
     fetchRecipe({id: params.id})
   }, [params.id])
   
-  if (!recipe && !isLoading) return null;
+  if (!recipe && !isLoading) return null
   return (
     <>
       <Toolbar disableGutters>

@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb"
 
 
 interface Query {
-  _id: ObjectId
+  _id: ObjectId;
 }
 
 export const recipeMiddleware = async (

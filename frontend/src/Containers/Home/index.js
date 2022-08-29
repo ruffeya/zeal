@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import Input from "@material-ui/core/Input"
 import Checkbox from "@material-ui/core/Checkbox"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
@@ -12,32 +12,32 @@ import List from "@material-ui/core/List"
 import ListItemText from "@material-ui/core/ListItemText"
 
 import * as actions from "../../actions"
-import { HomeWrapper, StyledListItem, StyledLink } from "./styles"
+import { HomeWrapper, StyledListItem } from "./styles"
 
 const ingredientList = ["flour", "sugar", "salt", "butter", "milk"]
 
 
 export const Home = ({ recipes, isLoading, searchRecipes, setRecipe }) => {
   
-  const [term, setTerm] = useState("");
-  const [ingredients, setIngredients] = useState(["milk"]);
-  let navigate = useNavigate();
+  const [term, setTerm] = useState("")
+  const [ingredients, setIngredients] = useState(["milk"])
+  let navigate = useNavigate()
   
   const fetchSearch = () => {
     // DONE: something is missing here for fetching
     searchRecipes({ name: term, ingredients })
   }
   const goToRecipe = (recipe) => {
-    setRecipe(recipe);
-    navigate(`/recipes/${recipe.id}`);
+    setRecipe(recipe)
+    navigate(`/recipes/${recipe.id}`)
   }
 
   const handleSearch = (event) => {
-    setTerm(event.target.value);
+    setTerm(event.target.value)
   }
 
   const handleIngredient = (ingredient, event) => {
-    const newIngredients  =  [...ingredients];
+    const newIngredients  =  [...ingredients]
     if (event.target.checked) {
       newIngredients.push(ingredient)
     } else {
