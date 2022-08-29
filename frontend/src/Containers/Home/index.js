@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import { HomeWrapper } from "./styles"
+import { HomeWrapper, StyledListItem } from "./styles"
+import Recipe from '../Recipe'
 import Input from "@material-ui/core/Input"
 import Checkbox from "@material-ui/core/Checkbox"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
@@ -9,7 +10,6 @@ import Divider from "@material-ui/core/Divider"
 import Button from "@material-ui/core/Button"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import * as actions from "../../actions"
 
@@ -21,6 +21,8 @@ class Home extends Component {
     this.handleSearch = this.handleSearch.bind(this)
     this.handleIngredient = this.handleIngredient.bind(this)
     this.fetchSearch = this.fetchSearch.bind(this)
+    this.fetchRecipe = this.fetchRecipe.bind(this)
+
     this.state = {
       term: "",
       ingredients: ["milk"],
@@ -29,6 +31,9 @@ class Home extends Component {
   fetchSearch() {
     // DONE: something is missing here for fetching
     this.props.searchRecipes({ name: this.state.term, ingridients: this.state.ingredients })
+  }
+  fetchRecipe(recipe) {
+    this.props.fetchRecipe(recipe)
   }
   handleSearch(event) {
     const term = event.target.value
@@ -76,19 +81,20 @@ class Home extends Component {
         {recipes && (
           <List>
             {recipes.map((recipe) => (
-              <ListItem key={recipe.id}>
+              <StyledListItem key={recipe.id} onClick={() => this.fetchRecipe(recipe)}>
                 <ListItemText primary={recipe.name} />
-              </ListItem>
+              </StyledListItem>
             ))}
           </List>
         )}
         {isLoading && <LinearProgress />}
         <Divider />
         {/*
-          TODO: Add a recipe component here.
+          DONE: Add a recipe component here.
           I'm expecting you to have it return null or a component based on the redux state, not passing any props from here
           I want to see how you wire up a component with connect and build actions.
         */}
+        <Recipe />
       </HomeWrapper>
     )
   }
@@ -103,6 +109,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       searchRecipes: actions.searchRecipes,
+      fetchRecipe: actions.fetchRecipe,
     },
     dispatch
   )
